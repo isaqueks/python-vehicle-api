@@ -15,7 +15,7 @@ class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
 
         try:
-            plate = self.path.split("/")[1]
+            plate = self.path.split("/")[1].upper()
             if plate == "":
                 self.send_response(400)
                 self.send_header("Content-type", "application/json")
@@ -29,7 +29,8 @@ class MyServer(BaseHTTPRequestHandler):
             self.send_header("Content-type", "application/json")
             self.end_headers()
             self.wfile.write(bytes(json.dumps(veh), "utf-8"))
-        except:
+        except Exception as ex:
+            print(ex)
             self.send_response(500)
             self.send_header("Content-type", "application/json")
             self.end_headers()
